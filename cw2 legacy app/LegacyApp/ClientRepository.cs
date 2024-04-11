@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace LegacyApp
 {
-    public class ClientRepository
+    public class ClientRepository : IClientRepository
     {
         /// <summary>
         /// This collection is used to simulate remote database
@@ -23,19 +23,19 @@ namespace LegacyApp
         {
         }
 
+        public Client GetById(int clientId)
+        {
+                int randomWaitTime = new Random().Next(2000);
+                Thread.Sleep(randomWaitTime);
+                if (Database.ContainsKey(clientId))
+                    return Database[clientId];
+                throw new ArgumentException($"User with id {clientId} does not exist in database");
+        }
+
         /// <summary>
         /// Simulating fetching a client from remote database
         /// </summary>
         /// <returns>Returning client object</returns>
-        internal Client GetById(int clientId)
-        {
-            int randomWaitTime = new Random().Next(2000);
-            Thread.Sleep(randomWaitTime);
 
-            if (Database.ContainsKey(clientId))
-                return Database[clientId];
-
-            throw new ArgumentException($"User with id {clientId} does not exist in database");
-        }
     }
 }
