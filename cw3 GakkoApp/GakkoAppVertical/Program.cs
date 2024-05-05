@@ -8,6 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();
 builder.Services.AddScoped<IStudentsService, StudentsService>();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -20,4 +21,5 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.RegisterStudentsUserEndpoints();
+app.MapControllers();
 app.Run();
