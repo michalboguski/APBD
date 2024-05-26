@@ -1,6 +1,7 @@
 using database_first.Context;
 using database_first.DTO;
 using database_first.Models;
+using database_first.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,11 +11,17 @@ namespace database_first.Controllers;
 [ApiController]
 public class TripsController : ControllerBase
 {
+    private TripService _tripService;
+    public TripsController(TripService tripService)
+    {
+        _tripService = tripService;
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetTrips()
     {
         var dbContext = new ApbdContext();
-        var result = await dbContext.Trips.OrderByDescending(t => t.DateFrom).ToListAsync();
+        var result = await _tripService.getAllTripsOrderedDescByDateStart();
         return Ok(result);
     }
 
@@ -54,7 +61,6 @@ public class TripsController : ControllerBase
             .Select(s => new
             {
                 cId = s.IdClient, tId = s.IdTrip
-                
             }).ToList();
         
         if (result.Count() != 0)
@@ -62,11 +68,14 @@ public class TripsController : ControllerBase
             return NoContent();
         }
 
-        ClientTrip NewClientTrip = new ClientTrip();
-        NewClientTrip.IdClient = clientID;
-        NewClientTrip.IdTrip = idTrip;
-        NewClientTrip.RegisteredAt = DateTime.Now;
-        NewClientTrip.PaymentDate = clientDTO.PaymentDate;
+        ClientTrip NewClientTrip = new ClientTrip   {
+            IdClient = clientID,
+            IdTrip = idTrip,
+            RegisteredAt = DateTime.Now,
+            PaymentDate = clientDTO.PaymentDate
+        };
+        
+        
         dbContext.ClientTrips.Add(NewClientTrip);
 
 

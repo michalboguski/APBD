@@ -1,4 +1,5 @@
 using database_first.Context;
+using database_first.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,18 +11,25 @@ namespace database_first.Controllers;
 [ApiController]
 public class ClientsController : ControllerBase
 {
+
+    private ClientService _clientService;
+
+    public ClientsController(ClientService clientService)
+    {
+        _clientService = clientService;
+    }
+
     [HttpDelete]
     [Route("/{id}")]
-    public async Task<IActionResult> deleteClent(int id)
+    public async Task<IActionResult> deleteClient(int id)
     {
-        var dbContext = new ApbdContext();
-        var count = dbContext.ClientTrips.Where(c => c.IdClient == id).Count().CompareTo(0);
-        if (count == 0)
+        var c = await _clientService.DeleteClientById(id);
+       
+        if (c == 1)
         {
-            await dbContext.Clients.Where(c => c.IdClient == id).ExecuteDeleteAsync();
             return Ok();
         }
 
-        return NoContent();
+        return BadRequest();
     }
 }
