@@ -12,4 +12,6 @@ public class s25236Database : DbContext
     {
     }
     public DbSet<Medikament> Medikaments { get; set; }
+    public DbSet<Doctor> Doctors { get; set; }
+    public DbSet<Patient> Patients { get; set; }
 }

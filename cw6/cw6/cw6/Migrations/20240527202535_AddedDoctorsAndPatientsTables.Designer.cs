@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using cw6;
 
@@ -11,9 +12,11 @@ using cw6;
 namespace cw6.Migrations
 {
     [DbContext(typeof(s25236Database))]
-    partial class s25236DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20240527202535_AddedDoctorsAndPatientsTables")]
+    partial class AddedDoctorsAndPatientsTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
