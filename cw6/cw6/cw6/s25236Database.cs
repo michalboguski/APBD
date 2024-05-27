@@ -2,6 +2,7 @@
 
 namespace cw6;
 
+
 public class s25236Database : DbContext
 {
     public s25236Database()
@@ -10,4 +11,5 @@ public class s25236Database : DbContext
     public s25236Database(DbContextOptions<s25236Database> options) :base(options)
     {
     }
+    public DbSet<Medikament> Medikaments { get; set; }
 }
