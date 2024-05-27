@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using cw6;
 
@@ -11,9 +12,11 @@ using cw6;
 namespace cw6.Migrations
 {
     [DbContext(typeof(s25236Database))]
-    partial class s25236DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20240527210021_AddedPrescriptionTableWiTHfILdbcONTEXT")]
+    partial class AddedPrescriptionTableWiTHfILdbcONTEXT
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,13 +53,13 @@ namespace cw6.Migrations
                     b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("cw6.Medicament", b =>
+            modelBuilder.Entity("cw6.Medikament", b =>
                 {
-                    b.Property<int>("IdMedicament")
+                    b.Property<int>("IdMedikament")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMedicament"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMedikament"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -73,7 +76,7 @@ namespace cw6.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("IdMedicament");
+                    b.HasKey("IdMedikament");
 
                     b.ToTable("Medikaments");
                 });
@@ -134,29 +137,6 @@ namespace cw6.Migrations
                     b.ToTable("Prescriptions");
                 });
 
-            modelBuilder.Entity("cw6.PrescriptionMedicament", b =>
-                {
-                    b.Property<int>("IdMedicament")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdPrescription")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Details")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("Dose")
-                        .HasColumnType("int");
-
-                    b.HasKey("IdMedicament", "IdPrescription");
-
-                    b.HasIndex("IdPrescription");
-
-                    b.ToTable("Prescription_Medicament");
-                });
-
             modelBuilder.Entity("cw6.Prescription", b =>
                 {
                     b.HasOne("cw6.Doctor", "Doctor")
@@ -174,25 +154,6 @@ namespace cw6.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Patient");
-                });
-
-            modelBuilder.Entity("cw6.PrescriptionMedicament", b =>
-                {
-                    b.HasOne("cw6.Medicament", "Medicament")
-                        .WithMany()
-                        .HasForeignKey("IdMedicament")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("cw6.Prescription", "Prescription")
-                        .WithMany()
-                        .HasForeignKey("IdPrescription")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Medicament");
-
-                    b.Navigation("Prescription");
                 });
 #pragma warning restore 612, 618
         }
