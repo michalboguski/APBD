@@ -9,6 +9,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<s25236Database>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IPatientRepository, PatientRepositoryImpl>();
+builder.Services.AddScoped<IMedicamentRepository, MedicamentRepositoryImpl>();
+builder.Services.AddScoped<IPrescriptionMedicamentRepository, PrescriptionMedicamentImpl>();
+builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepositoryImpl>();
+builder.Services.AddScoped<IPrescriptionService, PrescriptionServiceImpl>();
 
 var app = builder.Build();
 

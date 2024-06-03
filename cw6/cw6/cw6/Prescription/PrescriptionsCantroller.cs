@@ -6,9 +6,18 @@ namespace cw6;
 [Route("/api/prescriptions")]
 public class PrescriptionsCantroller : ControllerBase
 {
-    public async Task<IActionResult> addPrescription()
-    {
+    private IPrescriptionService _prescriptionService;
 
-        return Ok();
+    public PrescriptionsCantroller(IPrescriptionService prescriptionService)
+    {
+        _prescriptionService = prescriptionService;
+    }
+
+    [HttpPost]
+    [Route("/add/{DoctorId}")]
+    public async Task<IActionResult> addPrescription([FromQuery] int DoctorId, [FromBody] AddPrescriptionCommandDto addPrescriptionCommandDto)
+    {
+        var result = _prescriptionService.ProcessNewPrescription(DoctorId, addPrescriptionCommandDto);
+        return Ok(result);
     }
 }
