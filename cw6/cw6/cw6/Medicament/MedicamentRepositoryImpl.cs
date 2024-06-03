@@ -15,4 +15,9 @@ public class MedicamentRepositoryImpl : IMedicamentRepository
     {
         return await _medicaments.ToListAsync();
     }
+
+    public async Task<List<Medicament>> getAllMedicaments()
+    {
+        return await _medicaments.ToListAsync();
+    }
 }
